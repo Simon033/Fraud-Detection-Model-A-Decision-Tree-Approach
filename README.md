@@ -1,0 +1,2 @@
+# Fraud-Detection-Model-using-Logistic-Regression-for-Transaction-Data
+A robust fraud detection model using Logistic Regression to analyze transaction data for a financial company. The model achieved an accuracy score of 99.94% with 98% recall in identifying fraud while maintaining low false positive rates.. Utilized scikit-learn, pandas, matplotlib libraries for analysing, visualization and model training.
