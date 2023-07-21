@@ -30,10 +30,12 @@ Here's the table and data showing the same.
 **Accuracy score:** 0.9994766306961598
 
 **Confussion Matrix**
-          0 [ 1270271   633 ]
-(Actual)  1 [   33     1587 ]
-                0        1
-                (Predicted)
+
+               0 [ 1270271   633 ]
+     (Actual)  1 [   33     1587 ]
+                      0       1
+                    (Predicted)
+
 
 **Classification Report:**
               **precision    recall  f1-score   support**
@@ -42,8 +44,7 @@ Here's the table and data showing the same.
            *1       0.71      0.98      0.83      1620*
 
     accuracy                           1.00   1272524
-   macro avg       0.86      0.99      0.91   1272524
-weighted avg       1.00      1.00      1.00   1272524
+
 
 ### Interpretting the Model
 The models feature coefficients provide insights into the impact of each feature on the probability of fraud. 
