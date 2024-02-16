@@ -1,66 +1,86 @@
 # Fraud-Detection-Model-using-Logistic-Regression-for-Transaction-Data
-A robust fraud detection model using Logistic Regression to analyze transaction data for a financial company with 99.94% accuracy and 98% recall.
+A robust fraud detection model to analyze financial transaction data for fraud, with an overall accuracy of 92.2% and a recall of 98% in detecting fraud transaction. 
+The model was trained on 6.3 Million records where 70% of the data was used for training and remaining 30% for testing.
+
+### Introduction
+The purpose of this fraud detection model is to distinguish between legitimate and fraulent transaction by looking for patterns indicative of fraud.
 
 ## Data Dictionary & Source Acquisition
 - Data Dictionary: The data dictionary of the dataset can be found [here](https://drive.google.com/uc?id=1VQ-HAm0oHbv0GmDKP2iqqFNc5aI91OLn&export=download).
 - Data Source: The dataset can be found [here](https://drive.google.com/uc?export=download&confirm=6gh6&id=1VNpyNkGxHdskfdTNRSjjyNa5qC9u0JyV).
 
 ### Tools Used
-For this project everything was done using Python on Jupyter Notebook. Libraries such as pandas, scikit-learn, matplotlib, seaborn were used.
+For this project everything was done using Python on Jupyter Notebook. Libraries such as pandas, scikit-learn, statsmodel, matplotlib, seaborn, numpy were used.
 
 ### Dataset
-The dataset used to train the model contains historical transaction data from a financial institution. Each sample in the dataset represents a single transaction consisting of step, amount, nameOrig, oldbalanceOrg, newbalanceOrig, nameDest, newbalanceDest, oldbalanceDest, isFraud, isFlaggedFraud
+The dataset used to train the model contains historical transaction data from a financial institution. Each sample in the dataset represents a single transaction consisting of step, amount, nameOrig, oldbalanceOrg, newbalanceOrig, nameDest, newbalanceDest, oldbalanceDest, isFraud, isFlaggedFraud.
+The data originally has 6.3 million records.
 
-### Data Analysing and Processing
-After carefully curating and preprocessing the dataset, comprehensive exploratory data analysis (EDA) was done to gain essential insights into the underlying patterns and relationships. During the EDA phase, thorough examination of data distributions, missing values and outliers was done. Assessed feature correlations to ensure the dataset was primed for modeling. Additionally, feature engineering techniques, such as label encoding was done to transform categorical variables into a numerical format suitable for Logistic Regression.
+### Data Processing and EDA 
+Data was cleaned for missing values and outliers. Multicolinearity was dealt with by dropping and converting certain columns. Categorical columns were encoded with One Hot Encoding. Newer more features wre created from old features.
+Comprehensive exploratory data analysis (EDA) was done to alongside to gain essential insights into the underlying patterns, relationships and to determine relevant features. Assessed feature correlations to ensure the dataset was primed for modeling.
+The severe Class Imbalance was addressed using SMOTE and the data was furthered scaled using Robust Scaler to prevent overfitting. This also added records resulting in total **12.7** Million records.
+
+### Feature Selection
+Based on EDA done with univariate, multivaiate analysis, correlation matrix, etc relevant features were selected for model building.
+
+### Model Selection
+Multiple models were trained and the best performing model (Decision Tree Classifier) was selected since it had an accuracy, f1 and recall score of **99.9%**. Further **HyperParmeter Tuning** was done to prevent overfitting and find best parameters. Furthermore Decision Tree also allows for good interpretablity of the model and the underlying problem.
 
 ### Model Training
-The widely-used Logistic Regression algorithm is used due to its ability to handle binary classification problems like fraud detection and the varying nature of the values in dataset. 
-(In the end to verify the performance was measured with other model and Logistic Regression still had the best overall result)
+Hyper Parameter Tuning was done with a 70:30 data split, where only 70%(8.8M records) were used for model training. K-Fold method was used to address data imbalance and avoid overfitting.
 
 ### Model Evaluation
-To evaluate the performance of the fraud detection model, the dataset is split into training and testing sets. Metrics such as accuracy, confusion matrix, precision, recall, F1-score(classification_report) are computed on the test set to assess the model's effectiveness in detecting fraudulent transactions.
-
-The model achieved an impressive overall accuracy score of ***99.94%.*** It demonstrates high precision & recall in detecting non-fraudulent transactions, indicating its ability to correctly identify genuine transactions. On the other hand, the model shows a precision(0.71) but a significantly higher recall (0.98) for detecting fraudulent transactions. The high recall for fraud detection suggests that the model can correctly detect nearly ***98%*** of all actual fraud cases. This is a crucial aspect for a fraud detection system as missing fraudulent transactions can have severe consequences thus higher recall was given preferrence. Additionally, the low precision for fraud detection(0.71) means a higher false positive prediction. However, the actual false positives represent just ***0.05%*** of the total non-fraudulent cases, making the impact of false positives relatively insignificant.
-
-In summary, the model's prioritization of recall over precision for fraud detection indicates a robust ability to identify a vast majority of fraudulent transactions while maintaining a very high accuracy in classifying non-fraudulent transactions. The trade-off between precision and recall aligns well with the fraud detection objective, making the model highly effective in catching potential fraud cases. The model's performance indicates a strong foundation for its practical application in real-world scenarios.
+The remaining 30% data(3.8M records) which was not used during the training process was used for Model Evaluation. The model was evaluated using **MCC accuracy score** as the scoring parameter. Metrics such as accuracy, confusion matrix, precision, recall, F1-score(classification_report) are computed on the test set to assess the model's effectiveness in detecting fraudulent transactions. The model yeilded an ***overall accuracy of 92.2% and 98% recall on detecting fraud***.
 
 Here's the table and data showing the same.
 
-**Accuracy score:** 0.9994766306961598
+Accuracy:  0.9226100569385514
+Classification Report:
+               precision    recall  f1-score   support
+
+           0       0.98      0.94      0.96   1906585
+           1       0.94      0.98      0.96   1906060
+
+    accuracy                           0.96   3812645
+   macro avg       0.96      0.96      0.96   3812645
+weighted avg       0.96      0.96      0.96   3812645
 
 **Confussion Matrix**
 
-               0 [ 1270271   633 ]
-     (Actual)  1 [   33     1587 ]
-                      0       1
+               0 [ 1791267   115318 ]
+     (Actual)  1 [ 33821     1872239 ]
+                      0        1
                     (Predicted)
 
 
-**Classification Report:**
-              **precision    recall  f1-score   support**
+### Interpretting the Model 
+The models feature importance coefficients provide insights into the impact of each feature on the probability of fraud. 
+1- Old Balance of the Origin account seems to be the most important factor, wherein account with very high balance are very highly susceptible to fraud.<br>
+2- The type of transaction is also a key feature in determining if a transaction could be fraud, CASH_IN and TRANSFER are two types which are really useful in determinging fraud.<br>
+3 Transaction amount is also a key feature, wherein transactions of really big amount are never fraud and the fraud tries to hide in the medium-high range.<br>
+4- The Time to last transaction of the Destination Account and the type of destination account is also a key feature that helps determine fraud.<br>
 
-           *0       1.00      1.00      1.00   1270904*
-           *1       0.71      0.98      0.83      1620*
+           Feature  Coefficient
+0             step     0.032061
+1           amount     0.280566
+2    oldbalanceOrg     0.407410
+3         nameDest     0.064133
+4   oldbalanceDest     0.007755
+5    TimeDeltaDest     0.005672
+6          CASH_IN     0.173055
+7         CASH_OUT     0.012845
+9         PAYMENT     0.012921
+10        TRANSFER     0.003582
 
-    accuracy                           1.00   1272524
+
+### Limitations & Future Improvements
+- Computational Limits prevented me from exploring other more effective techniques like GNNs, Boosted Algorithms, etc.
+- To enhance the model's performance, further exploration of other machine learning algorithms and ensemble methods can be considered.(I couldn't because of GPU processing power limitations on my end)
 
 
-### Interpretting the Model
-The models feature coefficients provide insights into the impact of each feature on the probability of fraud. 
-The *'oldbalanceOrg'* column has a high positive coefficient of 8.85e-04 indicating that accounts with higher balance are often targeted probably because they present a more lucrative opportunity to maximize their gains. It also gives a chance to not be noticed, as small change in big number could be easily missed by the victim.
-The *'amount'* column has the highest negative coefficient of -8.85e-04 indicating that most fraudsters tend to keep the fraudulent transaction amounts moderate rather than attempting extremely large amount fraudulent transactions. There could be several reasons for this behavior such as 'Avoiding Detection', 'Bypassing Authorization Limits',etc.
-The *'newbalance'* column has the highest coeffecient of -9.643233e-04, this is a factor that is directly connected to and affected by oldbalance and amount. It is also possible to notice discrepancies in newbalance compared to what it should be.
-
-### Limitations
-While Logistic Regression is interpretable and performs really well in predicting binary output, it might have limitations in capturing complex relationships between features. In cases where interactions between features are non-linear eg('type','nameDest'), more sophisticated models like Random Forests, Gradient Boosting Machines, or Neural Networks may be more suitable.
-
-### Future Improvements
-To enhance the model's performance, further exploration of other machine learning algorithms and ensemble methods can be considered.(I couldn't because of GPU processing power limitations on my end)
-
-### Conclusion
-This Logistical Regression Model is capable of categorising transaction with an accuracy of ***99.94%*** and predicting ***98%*** of the fraud transactions. It mainly focuses on 'oldbalanceOrg', 'newbalanceOrig' and 'amount' to draw the prediction. This model can help financial institutions take premptive measures by predicting and stopping frauds before they happen.
-
+### Conclusion 
+This Model is capable of categorising transaction with an accuracy of 92.2% and predicts 98% of the fraud transactions accurately. It mainly focuses on 'oldbalanceOrg', 'type' and 'amount' and 'step' to draw the prediction. This model can help financial institutions take premptive measures by predicting and stopping frauds before they happen.
 
 A model is sucessfully created that predicts fraudulent transaction in a financial organisation with high accuracy.
 — Simon Nadar
