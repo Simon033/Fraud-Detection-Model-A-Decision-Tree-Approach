@@ -1,4 +1,4 @@
-# Fraud-Detection-Model-using-Logistic-Regression-for-Transaction-Data
+# Fraud Detection Model: A Decision Tree Approach
 A robust fraud detection model to analyze financial transaction data for fraud, with an overall accuracy of 92.2% and a recall of 98% in detecting fraud transaction. 
 The model was trained on 6.3 Million records where 70% of the data was used for training and remaining 30% for testing.
 
