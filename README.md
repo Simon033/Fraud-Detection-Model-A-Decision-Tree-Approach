@@ -35,16 +35,17 @@ The remaining 30% data(3.8M records) which was not used during the training proc
 
 Here's the table and data showing the same.
 
-Accuracy:  0.9226100569385514
-Classification Report:
+Accuracy:  0.9226100569385514<br>
+Classification Report:<br>
+
                precision    recall  f1-score   support
 
            0       0.98      0.94      0.96   1906585
            1       0.94      0.98      0.96   1906060
 
     accuracy                           0.96   3812645
-   macro avg       0.96      0.96      0.96   3812645
-weighted avg       0.96      0.96      0.96   3812645
+    macro avg      0.96      0.96      0.96   3812645  
+    weighted avg   0.96      0.96      0.96   3812645
 
 **Confussion Matrix**
 
@@ -62,16 +63,16 @@ The models feature importance coefficients provide insights into the impact of e
 4- The Time to last transaction of the Destination Account and the type of destination account is also a key feature that helps determine fraud.<br>
 
            Feature  Coefficient
-0             step     0.032061
-1           amount     0.280566
-2    oldbalanceOrg     0.407410
-3         nameDest     0.064133
-4   oldbalanceDest     0.007755
-5    TimeDeltaDest     0.005672
-6          CASH_IN     0.173055
-7         CASH_OUT     0.012845
-9         PAYMENT     0.012921
-10        TRANSFER     0.003582
+             step     0.032061
+           amount     0.280566
+    oldbalanceOrg     0.407410
+         nameDest     0.064133
+    oldbalanceDest    0.007755
+     TimeDeltaDest    0.005672
+          CASH_IN     0.173055
+         CASH_OUT     0.012845
+          PAYMENT     0.012921
+        TRANSFER      0.003582
 
 
 ### Limitations & Future Improvements
